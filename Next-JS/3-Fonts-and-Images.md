@@ -9,7 +9,7 @@ In Next.js, you can customize fonts by adding external fonts, using local font f
    Next.js offers a built-in font optimization feature starting with Next.js 13. You can easily import and use Google Fonts without worrying about performance.
 
    Example:
-   ```js
+   ```tsx
    import { Inter } from 'next/font/google';
 
    const inter = Inter({
@@ -20,6 +20,16 @@ In Next.js, you can customize fonts by adding external fonts, using local font f
    export default function Home() {
      return (
        <div style={{ fontFamily: inter.style.fontFamily }}>
+         <h1>Hello, World!</h1>
+       </div>
+     );
+   }
+   ```
+   or using
+   ```tsx
+    export default function Home() {
+     return (
+       <div className={ inter.className }>
          <h1>Hello, World!</h1>
        </div>
      );
@@ -52,32 +62,28 @@ In Next.js, you can customize fonts by adding external fonts, using local font f
 
 ### Method 2: Using Local Font Files
 
-1. **Store font files in the `public` folder**: Place your font files (e.g., `.woff`, `.woff2`, `.ttf`) in the `public` directory of your Next.js project.
+1. **Store font files in the `app` folder**: Place your font files (e.g., `.woff`, `.woff2`, `.ttf`) in the `public` directory of your Next.js project.
 
-2. **Include the fonts using CSS**:
+2. **Import the fonts to your Layout**:
    In your global CSS or a specific component’s style, you can reference the local fonts.
 
    Example:
-   ```css
-   /* styles/global.css */
-   @font-face {
-     font-family: 'MyCustomFont';
-     src: url('/fonts/MyCustomFont.woff2') format('woff2'),
-          url('/fonts/MyCustomFont.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
+   ```tsx
+   /* app/layout.tsx */
+   import localFont from "next/font/local";
+   
+   const myFont = localFont({
+    src: "./my-font.woff2"
+   });
+   
+   export default function RootLayout({children}){
+    return (
+      <html className={myFont.className}>
+        <body>{children}</body>
+      </html>
+    );
    }
 
-   body {
-     font-family: 'MyCustomFont', sans-serif;
-   }
-   ```
-
-3. **Import your CSS file**:
-   Make sure your global CSS file is imported in `_app.js` or `_app.tsx`.
-
-   ```jsx
-   import '../styles/global.css';
    ```
 
 ### Method 3: Using CSS-in-JS (Styled Components or Emotion)
@@ -93,7 +99,7 @@ If you prefer CSS-in-JS solutions, you can use libraries like **styled-component
 2. **Create a styled component with custom fonts**:
 
    Example:
-   ```jsx
+   ```tsx
    import styled from 'styled-components';
 
    const Heading = styled.h1`
@@ -115,11 +121,9 @@ If you prefer CSS-in-JS solutions, you can use libraries like **styled-component
 If you're using CSS modules in your Next.js project, you can define custom fonts just like with global CSS but scoped to a specific component.
 
 1. **Create a CSS module file**:
-   Create a file like `Home.module.css`.
-
-   Example:
+   Create a file like `Home.module.css` in specific folder such as `/home/home.module.css`.
    ```css
-   /* Home.module.css */
+   /* home.module.css */
    .heading {
      font-family: 'Inter', sans-serif;
      font-weight: 700;
@@ -129,8 +133,8 @@ If you're using CSS modules in your Next.js project, you can define custom fonts
 2. **Import and use the module**:
    In your component, import the CSS module and apply it.
 
-   ```jsx
-   import styles from './Home.module.css';
+   ```tsx
+   import styles from './home.module.css';
 
    export default function Home() {
      return (
@@ -142,15 +146,8 @@ If you're using CSS modules in your Next.js project, you can define custom fonts
 ## Image Component
 In **Next.js**, the recommended way to handle images is using the built-in `<Image />` component from `next/image`. This component optimizes images automatically for better performance (e.g., lazy loading, optimized sizing, and responsive support).
 
-### **Step 1: Install Next.js (if you haven't already)**
-```bash
-npx create-next-app@latest my-next-app
-cd my-next-app
-```
-
----
-
-### **Step 2: Use the `next/image` Component**
+### Path String
+#### **Step 1: Use the `next/image` Component**
 Edit your component (e.g., `pages/index.js`):
 
 ```javascript
@@ -167,8 +164,7 @@ export default function Home() {
         src="/images/my-photo.jpg" 
         alt="My Photo" 
         width={300} 
-        height={300} 
-        priority 
+        height={300}
       />
 
       {/* Remote Image */}
@@ -186,7 +182,7 @@ export default function Home() {
 
 ---
 
-### **Step 3: Configure `next.config.js` for External Images**
+#### **Step 2: Configure `next.config.js` for External Images**
 If you are using remote images, add their domains to your `next.config.js`:
 
 ```javascript
@@ -200,6 +196,29 @@ module.exports = {
 
 ---
 
+### Static Import
+#### Step 1 **Import image**
+```tsx
+import Image from 'next/image';
+import myPhoto from '../../public/my-photo.jpg'
+
+export default function Home() {
+  return (
+    <div>
+      <h1>Welcome to My Next.js App</h1>
+      
+      {/* Local Image */}
+      <Image 
+        src="{myPhoto}" 
+        alt="My Photo" 
+        width={300} 
+        height={300} 
+      />
+    </div>
+  );
+}
+```
+---
 ### **Key Props of `<Image />`:**
 - `src`: The image URL or path (required).
 - `alt`: Description for accessibility (required).
