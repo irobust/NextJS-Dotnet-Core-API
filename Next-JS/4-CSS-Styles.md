@@ -1,7 +1,87 @@
 # CSS Styles in Next.js
 To use both regular CSS and Tailwind CSS in a Next.js project, follow these steps:
 
-### 1. **Install Tailwind CSS**
+## Regular CSS
+### 1. Create a CSS file
+Create a CSS file (e.g., `styles.css`) in your project directory. You can place it in the `styles` folder or any directory that suits your project structure.
+
+For example:
+```css
+/* styles/styles.css */
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #333;
+}
+```
+
+### 2. Import the CSS file in `_app.js`
+To apply the styles globally, import the CSS file inside the custom `_app.js` file. The `_app.js` file is the main entry point for all pages in Next.js.
+
+```js
+// pages/_app.js
+import '../styles/styles.css';
+
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+
+export default MyApp;
+```
+
+### 3. Use the styles in your components/pages
+Now that you've imported the CSS globally, you can use it throughout your app.
+
+For example:
+```js
+// pages/index.js
+export default function Home() {
+  return (
+    <div>
+      <h1>Welcome to Next.js!</h1>
+      <p>This is a simple example using regular CSS.</p>
+    </div>
+  );
+}
+```
+
+### 4. (Optional) Component-Level CSS (CSS Modules)
+If you want to scope styles to specific components, Next.js also supports CSS Modules. You can create a CSS file with a `.module.css` extension, and it will scope the styles locally.
+
+For example:
+```css
+/* styles/Home.module.css */
+.container {
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.title {
+  color: #0070f3;
+}
+```
+
+Then, in your component:
+```js
+// pages/index.js
+import styles from '../styles/Home.module.css';
+
+export default function Home() {
+  return (
+    <div className={styles.container}>
+      <h1 className={styles.title}>Welcome to Next.js with CSS Modules!</h1>
+    </div>
+  );
+}
+```
+
+This way, the CSS is scoped only to that specific component, and there will be no conflicts with other styles in the app.
+
+## Tailwind CSS
+### 1. Install Tailwind CSS
 
 First, you need to install Tailwind CSS in your Next.js project. If you haven't already done this, you can set it up by following these steps:
 
@@ -48,7 +128,7 @@ In your global CSS file (e.g., `styles/globals.css`), add the following lines to
 @tailwind utilities;
 ```
 
-### 2. **Using Regular CSS in Next.js**
+### 2. Using Regular CSS in Next.js
 
 To use custom CSS alongside Tailwind, you can simply create CSS files and import them into your Next.js components or pages.
 
@@ -81,7 +161,7 @@ export default function Home() {
 }
 ```
 
-### 3. **Using Tailwind CSS in Next.js**
+### 3. Using Tailwind CSS in Next.js
 
 To use Tailwind classes, simply apply them to the elements in your JSX components.
 
@@ -95,7 +175,7 @@ export default function Home() {
 }
 ```
 
-### 4. **Combining Regular CSS and Tailwind CSS**
+### 4. Combining Regular CSS and Tailwind CSS
 
 You can combine custom CSS with Tailwind classes. Tailwind CSS provides utility-first classes, while your regular CSS file can handle more complex or custom styles.
 
@@ -118,7 +198,7 @@ export default function Home() {
 }
 ```
 
-### 5. **Important Notes**
+### 5. Important Notes
 
 - When you use Tailwind CSS, you usually rely on utility classes for styling, but you can still write custom styles for more complex or reusable components using regular CSS.
 - Next.js automatically supports CSS imports from your components or pages, so it's easy to mix Tailwind CSS and regular CSS in the same project.

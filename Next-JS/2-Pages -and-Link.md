@@ -3,14 +3,14 @@ In Next.js, creating pages and setting up navigation is quite straightforward. H
 
 ### 1. Creating Pages
 
-In Next.js, pages are created automatically based on the files you put in the `pages` directory. Every `.js` (or `.ts` for TypeScript) file in this folder becomes a route.
+In Next.js, pages are created automatically based on directory. Each folder name that has `page.jsx` (or `page.tsx` for TypeScript) file becomes a route.
 
 #### Example: 
-- Create a file `pages/index.js` for the homepage.
-- Create another file `pages/about.js` for the "About" page.
+- Create a file `home/page.tsx` for the homepage.
+- Create another file `about/page.tsx` for the "About" page.
 
 ```js
-// pages/index.js
+// home/page.tsx
 export default function Home() {
   return (
     <div>
@@ -21,7 +21,7 @@ export default function Home() {
 ```
 
 ```js
-// pages/about.js
+// about/page.tsx
 export default function About() {
   return (
     <div>
@@ -59,19 +59,18 @@ This will render a clickable link that navigates to the `/about` page when click
 
 ### 3. Dynamic Routes
 
-If you want to create dynamic routes (e.g., for a blog post), you can do this by adding square brackets to the file name inside the `pages` folder.
+If you want to create dynamic routes (e.g., for a blog post), you can do this by adding square brackets to the file name inside the `posts` folder.
 
 #### Example:
-- `pages/posts/[id].js` would capture dynamic routes like `/posts/1`, `/posts/2`, etc.
+- `posts/[id].js` would capture dynamic routes like `/posts/1`, `/posts/2`, etc.
 
 ```js
-// pages/posts/[id].js
-import { useRouter } from 'next/router';
+// posts/[id].js
 
-export default function Post() {
-  const router = useRouter();
-  const { id } = router.query;
-
+export default async function Post({params} : {
+  params : Promise<{ id: string }>
+}) {
+  const id = (await params).id
   return (
     <div>
       <h1>Post ID: {id}</h1>
@@ -116,17 +115,8 @@ export default function Home() {
 }
 ```
 
-### 5. Final Structure:
-
-- `pages/`
-  - `index.js` (Homepage)
-  - `about.js` (About page)
-  - `posts/[id].js` (Dynamic post page)
-- `components/`
-  - `NavBar.js` (Custom navigation)
-
 ### Key Points:
-- **Pages** are created by adding `.js` files to the `pages` directory.
+- **Pages** are created by adding `page.jsx` or `page.tsx` files to the directory.
 - **Linking** between pages is done using the `Link` component.
 - **Dynamic routes** can be created with file names like `[id].js`.
 - You can create a **navigation bar** with links to navigate between pages.
