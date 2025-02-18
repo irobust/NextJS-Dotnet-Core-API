@@ -185,12 +185,20 @@ export default function Home() {
 #### **Step 2: Configure `next.config.js` for External Images**
 If you are using remote images, add their domains to your `next.config.js`:
 
-```javascript
-// next.config.js
+```typescript
+// next.config.ts
 module.exports = {
   images: {
-    domains: ['example.com'], // Add the remote image domains here
-  },
+     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        port: '',
+        pathname: '/account123/**',
+        search: '',
+      }
+    ]
+  }
 };
 ```
 

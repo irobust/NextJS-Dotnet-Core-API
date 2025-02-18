@@ -72,7 +72,7 @@ Create custom backend endpoints using Next.js API routes.
 
 ### Example:
 ```javascript
-// pages/api/posts.js
+// app/api/posts/route.tsx
 export default async function handler(req, res) {
   const response = await fetch('https://jsonplaceholder.typicode.com/posts');
   const posts = await response.json();
@@ -88,6 +88,7 @@ For user interactions and dynamic content that don’t need pre-rendering.
 ### Example:
 ```javascript
 // pages/posts.js
+'use client'
 import { useEffect, useState } from 'react';
 
 export default function Posts() {
@@ -105,7 +106,7 @@ export default function Posts() {
       <h1>Client-Side Posts</h1>
       <ul>
         {posts.map(post => (
-          <li key={post.id}>{post.title}</li>
+          <li key   ={post.id}>{post.title}</li>
         ))}
       </ul>
     </div>
@@ -133,6 +134,7 @@ npm install swr
 Here’s how you can use SWR to fetch data:
 
 ```javascript
+'use client'
 import useSWR from 'swr';
 
 // Define a fetcher function that SWR will use to fetch data
@@ -147,7 +149,7 @@ function MyComponent() {
   return (
     <div>
       <h1>Data:</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <InvoiceList invoices={data} />
     </div>
   );
 }
