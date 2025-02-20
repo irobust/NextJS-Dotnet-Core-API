@@ -118,7 +118,7 @@ Instead of `OnConfiguring`, use **dependency injection** in `Program.cs`:
 
 ```csharp
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 ```
 
 And in `appsettings.json`:
@@ -126,7 +126,7 @@ And in `appsettings.json`:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Data Source=app.db"
+    "Default": "Data Source=app.db"
   }
 }
 ```
