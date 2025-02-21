@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "BxOlXrfc9xljTOkctseNccn1qd69WyZRGLIBXTtXfDA=",
+  "Source": "InvoiceBackend",
+  "BasePath": "_content/InvoiceBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
